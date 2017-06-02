@@ -1,0 +1,49 @@
+<?php
+date_default_timezone_set('America/Costa_Rica');
+
+//configuracion
+$gatewayUrl = $this->helper("paymentgateway")->getPaymentmethodPaymentgatewayurl();
+$key = $this->helper("paymentgateway")->getKey();
+$keyId = $this->helper("paymentgateway")->getKeyId();
+$processorId = $this->helper("paymentgateway")->getProcessorId();
+
+$order = new Mage_Sales_Model_Order(); //object to get all order information
+$orderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+$order->loadByIncrementId($orderId);
+
+//Quita el punto decimal del monto
+$amount = number_format($order->getBaseGrandTotal(),2);
+$time = time();
+$hash = md5("$orderId|$amount|$time|$key");
+
+//llenamos el arreglo que se enviara con los parametros anteriores
+$billingAddress = $order->getBillingAddress();
+$array_send['billingFirstName'] = $billingAddress->getFirstname();
+$array_send['billingLastName'] = $billingAddress->getLastname();
+$array_send['billingEMail'] = $billingAddress->getEmail();
+$array_send['billingAddress'] = $billingAddress->getStreetFull();
+$array_send['billingZIP'] = $billingAddress->getPostCode();
+$array_send['billingCity'] = $billingAddress->getCity();
+$array_send['billingState'] = $billingAddress->getRegion();
+$array_send['billingCountry'] = $billingAddress->getCountry();
+$array_send['billingPhone'] = $billingAddress->getTelephone();
+
+?>
+<h1>Procesando su transacci&oacute;n</h1>
+<br/>
+<p>Por favor ingrese los datos de su tarjeta.</p>
+<form name="CredomaticPost" method="post" action="<?php echo $gatewayUrl; ?>">
+    <input type="hidden" name="amount" id="amount" value="<?php echo $amount ?>">
+    <input type="hidden" name="hash" id="hash" value="<?php echo $hash ?>">
+    <input type="hidden" name="time" id="time" value="<?php echo $time ?>">
+    <input type="hidden" name="key_id" id="key_id" value="<?php echo $keyId; ?>">
+    <input type="hidden" name="processor_id" id="processor_id" value="<?php echo $processorId; ?>">
+    <input type="hidden" name="orderid" id="orderid" value="<?php echo $orderId; ?>">
+    <input type="text" name="ccnumber" id="ccnumber" value="">
+    <input type="text" name="ccexp" id="ccexp" value="">
+    <input type="text" name="cvv" id="cvv" value="">
+    <input type="hidden" name="address" id="address" value="">
+    <input type="hidden" name="type" id="type" value="sale">
+    <input type="hidden" name="redirect" id="redirect" value="http://dkoko.com/payget/paygateway/success">
+    <input type="submit" value="Submit">
+</form>

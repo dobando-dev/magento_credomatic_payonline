@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Clarion_Paymentgateway>
+            <version>0.1.4</version>
+        </Clarion_Paymentgateway>
+    </modules>
+
+	  <frontend>
+        <routers>
+            <paymentgateway>
+                <use>standard</use>
+                <args>
+                    <module>Clarion_Paymentgateway</module>
+                    <frontName>payget</frontName>
+                </args>
+            </paymentgateway>
+        </routers>
+
+    </frontend>
+	
+  
+  <adminhtml>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				
+				<admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <paymentgateway>
+                                        <title>Paymentgateway</title>
+                                    </paymentgateway>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+			</resources>
+		</acl>
+		
+    </adminhtml>   
+    <global>
+	   <models>
+	    <paymentgateway>
+		  <class>Clarion_Paymentgateway_Model</class>
+	    </paymentgateway>
+	   </models>
+	   <blocks>
+	      <paymentgateway>
+		  	<class>Clarion_Paymentgateway_Block</class>
+		  </paymentgateway>
+	   </blocks>
+        
+		<helpers>
+		<paymentgateway>
+		<class>Clarion_Paymentgateway_Helper</class>
+		</paymentgateway>
+		</helpers>
+	
+    </global>
+	<default>
+	
+    <payment>
+      <paymentgateway>
+        <model>paymentgateway/standard</model>
+        <active>1</active>
+	    <cgi_url>https://credomatic.compassmerchantsolutions.com/api/transact.php</cgi_url>
+        <key></key>
+        <key_id></key_id>
+        <processor_id></processor_id>
+        <order_status>pending</order_status>
+        <title>Pago en Linea</title>
+        <payment_action>redirect</payment_action>
+        <allowspecific>0</allowspecific>
+        <sort_order>1</sort_order>
+      </paymentgateway>
+    </payment>
+  </default>
+</config>
