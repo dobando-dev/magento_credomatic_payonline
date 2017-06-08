@@ -35,10 +35,26 @@ if($locale=="en_US")
 }
 
 ?>
+<style>
+    .logos{
+        float:right;
+        margin-right: 50%;
+    }
+    .logos #mastercard_logo{
+
+    }
+    .logos #visa_logo{
+        width: 116px;
+    }
+</style>
 <div class='dashboard mid-width'>
     <h1><?php echo $txtTitle ?></h1>
     <br/>
     <p><?php echo $txtSubtitle ?></p>
+    <div class="logos">
+        <img src="http://dkoko.com/skin/frontend/dkoko/default/img/master_card_logo.gif" alt="MasterCard SecureCode" id="mastercard_logo">
+        <img src="http://dkoko.com/skin/frontend/dkoko/default/img/visa_logo.jpg" alt="Verified by VISA" id="visa_logo">
+    </div>
     <form name="CredomaticPost" method="post" action="<?php echo $gatewayUrl; ?>">
         <input type="hidden" name="amount" id="amount" value="<?php echo $amount ?>">
         <input type="hidden" name="hash" id="hash" value="<?php echo $hash ?>">
@@ -51,7 +67,7 @@ if($locale=="en_US")
         <label for="ccexp"><?php echo $txtExpiration ?></label>
         <input type="text" name="ccexp" id="ccexp" value="" style="width:auto" size="5" placeholder="MMYY" required>
         <label for="cvv"><?php echo $txtCvv ?></label>
-        <input type="text" name="cvv" id="cvv" value="" style="width:auto" size="4" required>
+        <input type="password" name="cvv" id="cvv" value="" style="width:auto" size="4" required>
         <input type="hidden" name="type" id="type" value="sale">
         <input type="hidden" name="redirect" id="redirect" value="http://dkoko.com/payget/paygateway/success">
         <input type="submit" value="<?php echo $txtSubmit ?>" class="button btn-l">
