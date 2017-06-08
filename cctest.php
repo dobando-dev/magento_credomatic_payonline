@@ -1,7 +1,8 @@
 <?php
 date_default_timezone_set('America/Costa_Rica');
 
-$orderId = 'Test2';
+$time = time();
+$orderId = "Test$time";
 $key = '5b262dJytde8g8q3ChPJ2FQ7CE2RHyzJ';
 $keyId = '7762642';
 //Quita el punto decimal del monto
@@ -33,7 +34,7 @@ echo '</pre>'
     Processor ID
     <input type="text" name="processor_id" id="processor_id" value=""><br/>
     CC Number
-    <input type="text" name="ccnumber" id="ccnumber" value="4111111111111111"><br/>
+    <input type="text" name="ccnumber" id="ccnumber" value="4012001011000771"><br/>
     CC EXP
     <input type="text" name="ccexp" id="ccexp" value="1220"><br/>
     CCV
