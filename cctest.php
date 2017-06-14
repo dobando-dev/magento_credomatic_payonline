@@ -3,8 +3,8 @@ date_default_timezone_set('America/Costa_Rica');
 
 $time = time();
 $orderId = "Test$time";
-$key = '5b262dJytde8g8q3ChPJ2FQ7CE2RHyzJ';
-$keyId = '7762642';
+$key = '5b262dJytde8g8q3ChPJdsfsJHG89';
+$keyId = '1111111';
 //Quita el punto decimal del monto
 $amount = number_format(10.00,2);
 $time = time();
@@ -44,7 +44,7 @@ echo '</pre>'
     Address
     <input type="text" name="address" id="address" value=""><br/>
     Redirect
-    <input type="text" name="redirect" id="redirect" value="http://dkoko.com/cctest.php"><br/>
+    <input type="text" name="redirect" id="redirect" value="mysite.com/cctest.php"><br/>
     <input type="submit" value="Submit">
 </form>                        </div>
 </html>

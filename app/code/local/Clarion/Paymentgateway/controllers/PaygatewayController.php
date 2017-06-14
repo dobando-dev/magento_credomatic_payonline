@@ -18,6 +18,7 @@ class Clarion_Paymentgateway_PaygatewayController extends Mage_Core_Controller_F
     }
 
     public function successAction() {
+        $locale = Mage::app()->getLocale()->getLocaleCode();
         $result = $_GET['response'];
         if($result){
             $order = Mage::getModel('sales/order')->loadByIncrementId(Mage::getSingleton('checkout/session')->getLastRealOrderId());
@@ -31,11 +32,13 @@ class Clarion_Paymentgateway_PaygatewayController extends Mage_Core_Controller_F
                     break;
                 case '2':
                     $message = 'Operacion de pago denegada. Respuesta del sistema de pago: ' . $_GET['responsetext'];
-                    Mage::getSingleton('core/session')->addError('Operacion de pago denegada. Por favor contacte a un administrador para resolver el problema.');
+                    $error = ($locale=='en_US')?'Transaction denied. Please contact an administrator to solve the problem.':'Operacion de pago denegada. Por favor contacte a un administrador para resolver el problema.';
+                    Mage::getSingleton('core/session')->addError($error);
                     break;
                 case '3':
                     $message = 'Ocurrio un error al intentar el pago. Respuesta del sistema de pago: ' . $_GET['responsetext'];
-                    Mage::getSingleton('core/session')->addError('Error al intentar el pago. Por favor contacte a un administrador para completarlo.');
+                    $error = ($locale=='en_US')?'An error occurred while attempting payment. Please contact an administrator to solve the problem.':'Error al intentar el pago. Por favor contacte a un administrador para completarlo.';
+                    Mage::getSingleton('core/session')->addError($error);
                     break;
                 default:
                     $message = 'El pago no fue completado. Respuesta del sistema de pago: ' . $_GET['responsetext'];
@@ -46,7 +49,8 @@ class Clarion_Paymentgateway_PaygatewayController extends Mage_Core_Controller_F
 
         } else {
             $redirect_url = (Mage::getSingleton('customer/session')->isLoggedIn()) ? 'customer/account' : '/';
-            Mage::getSingleton('core/session')->addError('Ocurrió un error al procesar su pago. Por favor contacte a un administrador para resolver el problema.');
+            $error = ($locale=='en_US')?'An error occurred while attempting payment. Please contact an administrator to solve the problem.':'Ocurrió un error al procesar su pago. Por favor contacte a un administrador para resolver el problema.';
+            Mage::getSingleton('core/session')->addError($error);
         }
 
         $this->_redirect($redirect_url, array('_secure' => true));
